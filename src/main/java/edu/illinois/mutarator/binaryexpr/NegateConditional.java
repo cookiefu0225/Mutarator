@@ -25,6 +25,6 @@ public class NegateConditional extends VoidVisitorAdapter {
             case LESS_EQUALS -> n.setOperator(BinaryExpr.Operator.GREATER);
         }
 
-        System.out.println(n);
+//        System.out.println(n);
     }
 }
