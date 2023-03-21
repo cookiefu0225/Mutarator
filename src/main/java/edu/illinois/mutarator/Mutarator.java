@@ -1,24 +1,14 @@
 package edu.illinois.mutarator;
 
-import com.github.javaparser.ast.CompilationUnit;
-import com.github.javaparser.utils.CodeGenerationUtils;
-import com.github.javaparser.utils.SourceRoot;
-import edu.illinois.mutarator.binaryexpr.NegateConditional;
-import edu.illinois.mutarator.example.BinarySearcher;
+import edu.illinois.mutarator.example.BinarySearcherTest;
+import edu.illinois.mutarator.testrunner.TestRunner;
 
 public class Mutarator {
-    // Current Problem: Unable to use generated CompilationUnit to run the tests
     public static void main(String[] args) {
-        SourceRoot srt = new SourceRoot(
-                CodeGenerationUtils.mavenModuleRoot(BinarySearcher.class)
-                        .resolve("target/classes")
-        );
+        // use TestRunner can run test classes within the package
+        TestRunner tr = new TestRunner();
+        tr.runTest(BinarySearcherTest.class);
 
-        CompilationUnit cu = srt.parse("example", "BinarySearcher.java");
 
-        NegateConditional nc = new NegateConditional();
-        System.out.println(cu);
-        nc.visit(cu, null);
-        System.out.println(cu);
     }
 }
