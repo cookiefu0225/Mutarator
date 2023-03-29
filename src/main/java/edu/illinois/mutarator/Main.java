@@ -7,8 +7,10 @@ import edu.illinois.mutarator.binaryexpr.NegateConditional;
 import edu.illinois.mutarator.utils.FileTraverser;
 
 import java.io.File;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.io.IOException;
+import java.nio.file.*;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.util.HashSet;
 import java.util.List;
 
 import static edu.illinois.mutarator.utils.Executor.runProcess;
@@ -25,64 +27,53 @@ public class Main {
         FileTraverser ft = new FileTraverser();
         List<CompilationUnit> codes = ft.getAllSrcCodes();
 
+        // Mutation
+        System.out.println("First");
         NegateConditional nc = new NegateConditional();
         for (CompilationUnit cu : codes) {
             nc.visit(cu, null);
+        }
+
+        ft.saveChanges();
+        try {
+            runProcess("mvn test");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("================");
+        System.out.println("Mutation done");
+        System.out.println("================");
+        codes = ft.resumeFiles(codes);
+        try {
+            runProcess("mvn test");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+        System.out.println("Second");
+        ConditionalBoundary cb = new ConditionalBoundary();
+        for (CompilationUnit cu: codes) {
+            cb.visit(cu, null);
         }
         ft.saveChanges();
 
         try {
             runProcess("mvn test");
         } catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
 
-        System.out.println("Mutation is done, roll back!=========================");
-
+        System.out.println("================");
+        System.out.println("Mutation done");
+        System.out.println("================");
         ft.resumeFiles(codes);
         try {
             runProcess("mvn test");
         } catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
-
-//        File dir = new File("./src/main/resources/temp");
-//        if (!dir.exists()) {
-//            dir.mkdir();
-//        }
-//        Path sourcePath = Paths.get("./src/main/java");
-//        Path backupPath = Paths.get("./src/main/resources/temp");
-//
-//        SourceRoot srt = new SourceRoot(sourcePath);
-//        SourceRoot backupRt = new SourceRoot(backupPath);
-//
-//        CompilationUnit cu = srt.parse("example", "BinarySearcher.java");
-//        ConditionalBoundary cb = new ConditionalBoundary();
-//
-//        srt.saveAll(backupPath);
-//
-//        cb.visit(cu, null);
-//        srt.saveAll();
-//        try {
-//            runProcess("mvn test");
-//        } catch (Exception e) {
-//            System.out.println(e);
-//        }
-//
-//        System.out.println("Mutation is done, roll back!=========================");
-//
-//        backupRt.parse("example", "BinarySearcher.java");
-//
-//        backupRt.saveAll(sourcePath);
-//
-//
-//
-//        try {
-//            runProcess("mvn test");
-//        } catch (Exception e) {
-//            System.out.println(e);
-//        }
-
 
     }
 
