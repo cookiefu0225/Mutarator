@@ -1,13 +1,22 @@
-public class ToyProgram {
+public class ToyProgramMath {
     public static void sm1() {
-        if (1>1) {}
-        if (1<1) {}
-        if (1>=1) {}
-        if (1<=1) {}
+        int b = 4;
+        int c = 5;
+        int a = b - c;
+        int d = b + c;
+        int e = b / c;
+        int f = b * c;
+        int g = b * c;
+        int h = b | c;
+        int i = b & c;
+        int j = b & c;
+        int k = b >> c;
+        int l = b << c;
+        int m = b << c;
+
     }
 
     void complicatedCondition() {
-        if (1>1 && 3>3) {}
-        if (2>=2 && 4>=4) {}
+        String a = "foo" + "bar";
     }
 }
