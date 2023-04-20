@@ -22,4 +22,18 @@ public class FalseReturnTest {
         CompilationUnit expected = srt.parse("sample", "ToyReturnFalseReturnAnswer.java");
         assertEquals(expected, cu);
     }
+
+    @Test
+    public void testJsoup() {
+        SourceRoot srt = new SourceRoot(
+                CodeGenerationUtils.mavenModuleRoot(FalseReturnTest.class)
+                        .resolve("target/test-classes"));
+
+        CompilationUnit cu = srt.parse("org.jsoup.nodes", "TextNode.java");
+        FalseReturn fr = new FalseReturn();
+        fr.visit(cu, null);
+
+        CompilationUnit expected = srt.parse("sample.answer", "TextNodeFalseReturn.java");
+        assertEquals(expected, cu);
+    }
 }
