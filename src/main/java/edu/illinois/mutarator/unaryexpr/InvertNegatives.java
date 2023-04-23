@@ -1,6 +1,7 @@
 package edu.illinois.mutarator.unaryexpr;
 
 import com.github.javaparser.ast.expr.BinaryExpr;
+import com.github.javaparser.ast.expr.Expression;
 import com.github.javaparser.ast.expr.UnaryExpr;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 
@@ -16,10 +17,14 @@ public class InvertNegatives extends VoidVisitorAdapter {
         super.visit(n, org);
 
         UnaryExpr.Operator op = n.getOperator();
+        Expression expr = n.getExpression();
 
-        switch (op) {
-            case MINUS -> n.setOperator(UnaryExpr.Operator.PLUS);
+        if(!expr.isIntegerLiteralExpr()){
+            switch (op) {
+                case MINUS -> n.setOperator(UnaryExpr.Operator.PLUS);
+            }
         }
+
 
 //        System.out.println(n);
     }

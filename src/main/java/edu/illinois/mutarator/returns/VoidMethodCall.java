@@ -32,7 +32,7 @@ class MethodCallVisitor extends ModifierVisitor<Void> {
 //        System.out.println(n.getScope() + " - " + n.getName());
         Node parentNode = n.getParentNode().get();
         Node grandParentNode = parentNode.getParentNode().get();
-//        System.out.println(grandParentNode.remove(parentNode));
+        System.out.println(grandParentNode.remove(parentNode));
 
         // Don't forget to call super, it may find more method calls inside the arguments of this method call, for example.
 //        super.visit(n, arg);
