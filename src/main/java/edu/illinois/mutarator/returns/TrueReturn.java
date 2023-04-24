@@ -6,6 +6,12 @@ import com.github.javaparser.ast.stmt.ReturnStmt;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 
 public class TrueReturn extends VoidVisitorAdapter {
+
+    private int pointCount = 0;
+    private int callingCount = 0;
+    private int mutantsId = 0;
+    private boolean mutateMode = false;
+
     @Override
     public void visit(MethodDeclaration md, Object obj) {
 //        System.out.println(md.toString());
@@ -14,11 +20,43 @@ public class TrueReturn extends VoidVisitorAdapter {
         String returnType = md.getType().toString();
 
         if (returnType.equals("boolean") || returnType.equals("Boolean")) {
-            md.walk(ReturnStmt.class, returnStmt -> {
-                BooleanLiteralExpr ble = new BooleanLiteralExpr(true);
-                returnStmt.setExpression(ble);
-            });
-        }
+            if (mutateMode) {
 
+                md.walk(ReturnStmt.class, returnStmt -> {
+                    if (mutantsId == callingCount) {
+                        BooleanLiteralExpr ble = new BooleanLiteralExpr(true);
+                        returnStmt.setExpression(ble);
+                    }
+                    callingCount ++;
+                });
+            } else {
+                md.walk(ReturnStmt.class, returnStmt -> {
+                    pointCount ++;
+                });
+            }
+        }
+    }
+
+    public int getMutantsNumber() {
+        return pointCount;
+    }
+
+    /**
+     * Switch mutator mode to mutation mode
+     */
+    public void switchToMutation() {
+        mutateMode = true;
+    }
+
+    public void switchToCount() {
+        mutateMode = false;
+    }
+
+    public void resetCallingCount() {
+        callingCount = 0;
+    }
+
+    public void setMutantId(int id) {
+        mutantsId = id;
     }
 }

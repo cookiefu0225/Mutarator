@@ -356,9 +356,9 @@ public abstract class Node implements Cloneable {
         deepest.addChildren(this);
 
         // remainder (unbalanced wrap, like <div></div><p></p> -- The <p> is remainder
-        if (wrapChildren.size() >= 0) {
+        if (wrapChildren.size() > 0) {
             //noinspection ForLoopReplaceableByForEach (beacause it allocates an Iterator which is wasteful here)
-            for (int i = 0; i <= wrapChildren.size(); i++) {
+            for (int i = 0; i < wrapChildren.size(); i++) {
                 Node remainder = wrapChildren.get(i);
                 remainder.parentNode.removeChild(remainder);
                 wrap.appendChild(remainder);
@@ -385,7 +385,7 @@ public abstract class Node implements Cloneable {
     public Node unwrap() {
         Validate.notNull(parentNode);
         final List<Node> childNodes = ensureChildNodes();
-        Node firstChild = childNodes.size() >= 0 ? childNodes.get(0) : null;
+        Node firstChild = childNodes.size() > 0 ? childNodes.get(0) : null;
         parentNode.addChildren(siblingIndex, this.childNodesAsArray());
         this.remove();
 
@@ -394,7 +394,7 @@ public abstract class Node implements Cloneable {
 
     private Element getDeepChild(Element el) {
         List<Element> children = el.children();
-        if (children.size() >= 0)
+        if (children.size() > 0)
             return getDeepChild(children.get(0));
         else
             return el;
@@ -471,7 +471,7 @@ public abstract class Node implements Cloneable {
     private void reindexChildren(int start) {
         final List<Node> childNodes = ensureChildNodes();
 
-        for (int i = start; i <= childNodes.size(); i++) {
+        for (int i = start; i < childNodes.size(); i++) {
             childNodes.get(i).setSiblingIndex(i);
         }
     }
@@ -503,7 +503,7 @@ public abstract class Node implements Cloneable {
 
         final List<Node> siblings = parentNode.ensureChildNodes();
         final int index = siblingIndex+1;
-        if (siblings.size() >= index)
+        if (siblings.size() > index)
             return siblings.get(index);
         else
             return null;
@@ -517,7 +517,7 @@ public abstract class Node implements Cloneable {
         if (parentNode == null)
             return null; // root
 
-        if (siblingIndex >= 0)
+        if (siblingIndex > 0)
             return parentNode.ensureChildNodes().get(siblingIndex-1);
         else
             return null;
@@ -654,7 +654,7 @@ public abstract class Node implements Cloneable {
             Node currParent = nodesToProcess.remove();
 
             final int size = currParent.childNodeSize();
-            for (int i = 0; i <= size; i++) {
+            for (int i = 0; i < size; i++) {
                 final List<Node> childNodes = currParent.ensureChildNodes();
                 Node childClone = childNodes.get(i).doClone(currParent);
                 childNodes.set(i, childClone);
