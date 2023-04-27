@@ -18,8 +18,12 @@ public class IncrementTest {
         // Parse target file
         CompilationUnit cu = srt.parse("sample", "ToyProgramIncrement.java");
 
-        Increment nc = new Increment();
-        nc.visit(cu, null);
+        Increment incre = new Increment();
+        incre.visit(cu, null);
+        int totalMutant = incre.getMutantsNumber();
+        incre.switchToMutation();
+        incre.setMutantId(0);
+        incre.visit(cu, null);
 
         CompilationUnit expected = srt.parse("sample", "ToyProgramIncrement-Modified.java");
         assertEquals(expected, cu);

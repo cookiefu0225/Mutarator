@@ -18,8 +18,12 @@ public class InvertNegativesTest {
         // Parse target file
         CompilationUnit cu = srt.parse("sample", "ToyProgramInvertNegatives.java");
 
-        InvertNegatives nc = new InvertNegatives();
-        nc.visit(cu, null);
+        InvertNegatives in = new InvertNegatives();
+        in.visit(cu, null);
+        int totalMutant = in.getMutantsNumber();
+        in.switchToMutation();
+        in.setMutantId(0);
+        in.visit(cu, null);
 
         CompilationUnit expected = srt.parse("sample", "ToyProgramInvertNegatives-Modified.java");
         assertEquals(expected, cu);

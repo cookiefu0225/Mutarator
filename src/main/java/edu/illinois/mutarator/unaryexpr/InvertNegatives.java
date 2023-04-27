@@ -6,6 +6,11 @@ import com.github.javaparser.ast.expr.UnaryExpr;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 
 public class InvertNegatives extends VoidVisitorAdapter {
+
+    private int pointCount = 0;
+    private int callingCount = 0;
+    private int mutantsId = 0;
+    private boolean mutateMode = false;
     /**
      * Negate Conditional Mutatants only negate simple binary expressions
      * p && q -> !p || !q is not supported now
@@ -20,12 +25,43 @@ public class InvertNegatives extends VoidVisitorAdapter {
         Expression expr = n.getExpression();
 
         if(!expr.isIntegerLiteralExpr()){
-            switch (op) {
-                case MINUS -> n.setOperator(UnaryExpr.Operator.PLUS);
+            if(mutateMode){
+                switch (op) {
+                    case MINUS -> {
+                        if(mutantsId == callingCount) {
+                            n.setOperator(UnaryExpr.Operator.PLUS);
+                        }
+                        callingCount ++;
+                    }
+                }
+            }else {
+                switch (op){
+                    case  MINUS -> pointCount++;
+                }
             }
+
         }
-
-
-//        System.out.println(n);
     }
+    public int getMutantsNumber() {
+        return pointCount;
+    }
+    /**
+     * Switch mutator mode to mutation mode
+     */
+    public void switchToMutation() {
+        mutateMode = true;
+    }
+
+    public void switchToCount() {
+        mutateMode = false;
+    }
+
+    public void resetCallingCount() {
+        callingCount = 0;
+    }
+
+    public void setMutantId(int id) {
+        mutantsId = id;
+    }
+
 }
