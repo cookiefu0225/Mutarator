@@ -19,8 +19,12 @@ public class MathTest {
         // Parse target file
         CompilationUnit cu = srt.parse("sample", "ToyProgramMath.java");
 
-        Math nc = new Math();
-        nc.visit(cu, null);
+        Math math = new Math();
+        math.visit(cu, null);
+        int totalMutant = math.getMutantsNumber();
+        math.switchToMutation();
+        math.setMutantId(0);
+        math.visit(cu, null);
 
         CompilationUnit expected = srt.parse("sample", "ToyProgramMath-Modified.java");
         assertEquals(expected, cu);
