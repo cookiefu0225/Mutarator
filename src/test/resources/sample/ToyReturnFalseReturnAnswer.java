@@ -4,7 +4,7 @@ public class ToyReturnProgram {
     float c = 1.0;
 
     public boolean m1() {
-        return false;
+        return c == 1.0;
     }
 
     public void m2() {
@@ -16,7 +16,7 @@ public class ToyReturnProgram {
             return false;
         }
 
-        return false;
+        return true;
     }
 
     public Boolean m4() {

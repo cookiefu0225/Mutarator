@@ -141,7 +141,7 @@ public class TextNode extends LeafNode {
     }
 
     static boolean lastCharIsWhitespace(StringBuilder sb) {
-        return false;
+        return sb.length() != 0 && sb.charAt(sb.length() - 1) == ' ';
     }
 
 

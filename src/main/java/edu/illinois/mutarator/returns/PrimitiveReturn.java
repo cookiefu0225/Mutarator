@@ -1,31 +1,40 @@
 package edu.illinois.mutarator.returns;
 
 import com.github.javaparser.ast.body.MethodDeclaration;
-import com.github.javaparser.ast.expr.BooleanLiteralExpr;
+import com.github.javaparser.ast.expr.IntegerLiteralExpr;
 import com.github.javaparser.ast.stmt.ReturnStmt;
+import com.github.javaparser.ast.type.PrimitiveType;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 
-public class FalseReturn extends VoidVisitorAdapter {
+import java.util.HashSet;
+import java.util.Set;
 
+public class PrimitiveReturn extends VoidVisitorAdapter {
+    Set<String> primitiveTypes = new HashSet<>();
     private int pointCount = 0;
     private int callingCount = 0;
     private int mutantsId = 0;
     private boolean mutateMode = false;
 
+    public PrimitiveReturn() {
+        for (PrimitiveType.Primitive c : PrimitiveType.Primitive.values()) {
+            primitiveTypes.add(c.asString());
+        }
+    }
+
     @Override
     public void visit(MethodDeclaration md, Object obj) {
-//        System.out.println(md.toString());
         super.visit(md, obj);
 
-        String returnType = md.getType().toString();
+        final String returnType = md.getType().toString();
+        boolean valid = primitiveTypes.contains(returnType) &&
+                !returnType.equals("byte") && !returnType.equals("boolean");
 
-        if (returnType.equals("boolean") || returnType.equals("Boolean")) {
+        if (valid) {
             if (mutateMode) {
-
                 md.walk(ReturnStmt.class, returnStmt -> {
                     if (mutantsId == callingCount) {
-                        BooleanLiteralExpr ble = new BooleanLiteralExpr(false);
-                        returnStmt.setExpression(ble);
+                        returnStmt.setExpression(new IntegerLiteralExpr(0));
                     }
                     callingCount ++;
                 });
@@ -35,9 +44,6 @@ public class FalseReturn extends VoidVisitorAdapter {
                 });
             }
         }
-
-
-//        System.out.println("======");
     }
 
     public int getMutantsNumber() {
@@ -61,5 +67,9 @@ public class FalseReturn extends VoidVisitorAdapter {
 
     public void setMutantId(int id) {
         mutantsId = id;
+    }
+
+    public int getCallingCount() {
+        return callingCount;
     }
 }

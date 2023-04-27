@@ -18,6 +18,12 @@ public class FalseReturnTest {
 
         FalseReturn fr = new FalseReturn();
         fr.visit(cu, null);
+        int totalMutants = fr.getMutantsNumber();
+        assertEquals(4, totalMutants);
+        fr.switchToMutation();
+        fr.setMutantId(3);
+        fr.visit(cu, null);
+        fr.resetCallingCount();
 
         CompilationUnit expected = srt.parse("sample", "ToyReturnFalseReturnAnswer.java");
         assertEquals(expected, cu);
@@ -32,6 +38,12 @@ public class FalseReturnTest {
         CompilationUnit cu = srt.parse("org.jsoup.nodes", "TextNode.java");
         FalseReturn fr = new FalseReturn();
         fr.visit(cu, null);
+        int totalMutants = fr.getMutantsNumber();
+        assertEquals(2, totalMutants);
+        fr.switchToMutation();
+        fr.setMutantId(0);
+        fr.visit(cu, null);
+        fr.resetCallingCount();
 
         CompilationUnit expected = srt.parse("sample.answer", "TextNodeFalseReturn.java");
         assertEquals(expected, cu);

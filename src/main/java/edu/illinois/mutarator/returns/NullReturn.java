@@ -1,31 +1,44 @@
 package edu.illinois.mutarator.returns;
 
 import com.github.javaparser.ast.body.MethodDeclaration;
-import com.github.javaparser.ast.expr.BooleanLiteralExpr;
+import com.github.javaparser.ast.expr.NullLiteralExpr;
 import com.github.javaparser.ast.stmt.ReturnStmt;
+import com.github.javaparser.ast.type.PrimitiveType;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 
-public class FalseReturn extends VoidVisitorAdapter {
+import java.util.HashSet;
+import java.util.Set;
 
+public class NullReturn extends VoidVisitorAdapter {
     private int pointCount = 0;
     private int callingCount = 0;
     private int mutantsId = 0;
     private boolean mutateMode = false;
+    private Set<String> excludeSet = new HashSet<>();
+
+    public NullReturn() {
+        for (PrimitiveType.Primitive c : PrimitiveType.Primitive.values()) {
+            excludeSet.add(c.asString());
+        }
+        for (EmptyReturn.EmptySupport e : EmptyReturn.EmptySupport.values()) {
+            excludeSet.add(e.toString());
+        }
+        excludeSet.add("void");
+    }
 
     @Override
     public void visit(MethodDeclaration md, Object obj) {
-//        System.out.println(md.toString());
         super.visit(md, obj);
 
-        String returnType = md.getType().toString();
+        final String returnType = md.getType().toString();
+        String trimmedType = genericClassChecker(returnType);
+        boolean valid = !excludeSet.contains(trimmedType);
 
-        if (returnType.equals("boolean") || returnType.equals("Boolean")) {
+        if (valid) {
             if (mutateMode) {
-
                 md.walk(ReturnStmt.class, returnStmt -> {
                     if (mutantsId == callingCount) {
-                        BooleanLiteralExpr ble = new BooleanLiteralExpr(false);
-                        returnStmt.setExpression(ble);
+                        returnStmt.setExpression(new NullLiteralExpr());
                     }
                     callingCount ++;
                 });
@@ -35,9 +48,11 @@ public class FalseReturn extends VoidVisitorAdapter {
                 });
             }
         }
+    }
 
-
-//        System.out.println("======");
+    private String genericClassChecker(String target) {
+        int temp = target.indexOf('<');
+        return temp != -1 ? target.substring(0, temp) : target;
     }
 
     public int getMutantsNumber() {

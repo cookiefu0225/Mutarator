@@ -30,7 +30,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>edu.illinois.mutarator.Mutarator</mainClass>
+                            <mainClass>edu.illinois.mutarator.Main</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>

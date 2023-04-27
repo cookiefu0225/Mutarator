@@ -18,6 +18,12 @@ public class TrueReturnTest {
 
         TrueReturn fr = new TrueReturn();
         fr.visit(cu, null);
+        int totalMutants = fr.getMutantsNumber();
+        assertEquals(4, totalMutants);
+        fr.switchToMutation();
+        fr.setMutantId(0);
+        fr.visit(cu, null);
+        fr.resetCallingCount();
 
         CompilationUnit expected = srt.parse("sample", "ToyReturnTrueReturnAnswer.java");
         assertEquals(expected, cu);

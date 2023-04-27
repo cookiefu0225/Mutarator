@@ -20,6 +20,12 @@ public class NegateConditionalTest {
 
         NegateConditional nc = new NegateConditional();
         nc.visit(cu, null);
+        int totalMutant = nc.getMutantsNumber();
+        int mutateTarget = 3;
+        nc.setMutantId(mutateTarget);
+        nc.switchToMutation();
+        nc.visit(cu, null);
+        nc.resetCallingCount();
 
         CompilationUnit expected = srt.parse("sample", "ToyProgramNegateConditional-Modified.java");
         assertEquals(expected, cu);

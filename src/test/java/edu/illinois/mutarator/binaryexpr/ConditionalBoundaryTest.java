@@ -19,6 +19,12 @@ public class ConditionalBoundaryTest {
         CompilationUnit cu = srt.parse("sample", "ToyProgramConditionalBoundary.java");
 
         ConditionalBoundary cdb = new ConditionalBoundary();
+        cdb.visit(cu, null);    // count total mutant
+        int totalMutant = cdb.getMutantsNumber();
+
+        cdb.switchToMutation();
+        // mutate n th mutant -> set mutant id = n -1
+        cdb.setMutantId(2);
         cdb.visit(cu, null);
 
         CompilationUnit expected = srt.parse("sample", "ToyProgramConditionalBoundary-Modified.java");
@@ -34,8 +40,12 @@ public class ConditionalBoundaryTest {
         CompilationUnit cu = srt.parse("org.jsoup.nodes", "Node.java");
         ConditionalBoundary cdb = new ConditionalBoundary();
         cdb.visit(cu, null);
+        int totalMutant = cdb.getMutantsNumber();
+        cdb.switchToMutation();
+        cdb.setMutantId(0);
+        cdb.visit(cu, null);
 
-        CompilationUnit expected = srt.parse("org.jsoup.nodes", "NodeConditionalBoundary-Modified.java");
+        CompilationUnit expected = srt.parse("sample.answer", "NodeConditionalBoundary.java");
         assertEquals(expected, cu);
     }
 }

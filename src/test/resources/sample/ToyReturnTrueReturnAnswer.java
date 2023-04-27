@@ -13,7 +13,7 @@ public class ToyReturnProgram {
 
     public boolean m3(int i) {
         if (i == 4) {
-            return true;
+            return false;
         }
 
         return true;
