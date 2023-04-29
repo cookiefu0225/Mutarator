@@ -59,4 +59,7 @@ public class Mutarator extends VoidVisitorAdapter {
     public void visit(MethodCallExpr n, Object obj) {
         super.visit(n, obj);
     }
+
+    @Override
+    public void visit(ObjectCreationExpr oc, Object obj){ super.visit(oc, obj);}
 }
