@@ -1,6 +1,7 @@
 package edu.illinois.mutarator;
 
-import com.github.javaparser.ast.expr.BinaryExpr;
+import com.github.javaparser.ast.body.VariableDeclarator;
+import com.github.javaparser.ast.expr.*;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 
 public class Mutarator extends VoidVisitorAdapter {
@@ -42,5 +43,20 @@ public class Mutarator extends VoidVisitorAdapter {
     @Override
     public void visit(BinaryExpr be, Object obj) {
         super.visit(be, obj);
+    }
+
+    @Override
+    public void visit(VariableDeclarationExpr vd, Object obj) {
+        super.visit(vd, obj);
+    }
+
+    @Override
+    public void visit(AssignExpr ae, Object obj) {
+        super.visit(ae, obj);
+    }
+
+    @Override
+    public void visit(MethodCallExpr n, Object obj) {
+        super.visit(n, obj);
     }
 }
