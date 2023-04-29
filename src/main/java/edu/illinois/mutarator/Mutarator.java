@@ -1,5 +1,6 @@
 package edu.illinois.mutarator;
 
+import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.VariableDeclarator;
 import com.github.javaparser.ast.expr.*;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
@@ -58,5 +59,10 @@ public class Mutarator extends VoidVisitorAdapter {
     @Override
     public void visit(MethodCallExpr n, Object obj) {
         super.visit(n, obj);
+    }
+
+    @Override
+    public void visit(CompilationUnit cu, Object obj) {
+        super.visit(cu, obj);
     }
 }
