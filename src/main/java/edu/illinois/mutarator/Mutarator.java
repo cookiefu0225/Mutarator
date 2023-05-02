@@ -38,7 +38,7 @@ public class Mutarator extends VoidVisitorAdapter {
         mutantsId = id;
     }
 
-    public void resetPointCount() {pointCount = 0;}
+    public void resetPointCount() { pointCount = 0; }
 
     // Add new override functions supported by VoidVisitAdapter if needed
     @Override

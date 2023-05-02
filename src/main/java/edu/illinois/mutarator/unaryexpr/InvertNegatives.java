@@ -4,13 +4,9 @@ import com.github.javaparser.ast.expr.BinaryExpr;
 import com.github.javaparser.ast.expr.Expression;
 import com.github.javaparser.ast.expr.UnaryExpr;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
+import edu.illinois.mutarator.Mutarator;
 
-public class InvertNegatives extends VoidVisitorAdapter {
-
-    private int pointCount = 0;
-    private int callingCount = 0;
-    private int mutantsId = 0;
-    private boolean mutateMode = false;
+public class InvertNegatives extends Mutarator {
     /**
      * Negate Conditional Mutatants only negate simple binary expressions
      * p && q -> !p || !q is not supported now
@@ -41,27 +37,6 @@ public class InvertNegatives extends VoidVisitorAdapter {
             }
 
         }
-    }
-    public int getMutantsNumber() {
-        return pointCount;
-    }
-    /**
-     * Switch mutator mode to mutation mode
-     */
-    public void switchToMutation() {
-        mutateMode = true;
-    }
-
-    public void switchToCount() {
-        mutateMode = false;
-    }
-
-    public void resetCallingCount() {
-        callingCount = 0;
-    }
-
-    public void setMutantId(int id) {
-        mutantsId = id;
     }
 
 }

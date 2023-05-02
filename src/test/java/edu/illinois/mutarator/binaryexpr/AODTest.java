@@ -26,6 +26,9 @@ public class AODTest {
         ad.visit(cu, null);
         ad.resetCallingCount();
 
+        ad.resetPointCount();
+        assertEquals(0, ad.getMutantsNumber());
+
         CompilationUnit expected = srt.parse("sample.answer", "AODAnswer.java");
         assertEquals(expected, cu);
 

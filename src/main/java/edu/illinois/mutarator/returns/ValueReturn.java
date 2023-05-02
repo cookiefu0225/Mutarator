@@ -6,10 +6,12 @@ import com.github.javaparser.ast.expr.*;
 import com.github.javaparser.ast.stmt.ReturnStmt;
 import com.github.javaparser.ast.type.PrimitiveType;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
+import edu.illinois.mutarator.Mutarator;
 import edu.illinois.mutarator.Mutator;
 import java.util.*;
 
-public class ValueReturn extends VoidVisitorAdapter {
+@Deprecated
+public class ValueReturn extends Mutarator {
     Set<String> primitiveTypes = new HashSet<>();
     FalseReturn falseReturnTool = new FalseReturn();
     TrueReturn trueReturnTool = new TrueReturn();

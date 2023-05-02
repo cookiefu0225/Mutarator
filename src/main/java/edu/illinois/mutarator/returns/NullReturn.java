@@ -5,15 +5,12 @@ import com.github.javaparser.ast.expr.NullLiteralExpr;
 import com.github.javaparser.ast.stmt.ReturnStmt;
 import com.github.javaparser.ast.type.PrimitiveType;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
+import edu.illinois.mutarator.Mutarator;
 
 import java.util.HashSet;
 import java.util.Set;
 
-public class NullReturn extends VoidVisitorAdapter {
-    private int pointCount = 0;
-    private int callingCount = 0;
-    private int mutantsId = 0;
-    private boolean mutateMode = false;
+public class NullReturn extends Mutarator {
     private Set<String> excludeSet = new HashSet<>();
 
     public NullReturn() {
@@ -55,26 +52,4 @@ public class NullReturn extends VoidVisitorAdapter {
         return temp != -1 ? target.substring(0, temp) : target;
     }
 
-    public int getMutantsNumber() {
-        return pointCount;
-    }
-
-    /**
-     * Switch mutator mode to mutation mode
-     */
-    public void switchToMutation() {
-        mutateMode = true;
-    }
-
-    public void switchToCount() {
-        mutateMode = false;
-    }
-
-    public void resetCallingCount() {
-        callingCount = 0;
-    }
-
-    public void setMutantId(int id) {
-        mutantsId = id;
-    }
 }

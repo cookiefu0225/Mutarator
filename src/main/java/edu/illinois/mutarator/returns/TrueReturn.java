@@ -4,13 +4,9 @@ import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.expr.BooleanLiteralExpr;
 import com.github.javaparser.ast.stmt.ReturnStmt;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
+import edu.illinois.mutarator.Mutarator;
 
-public class TrueReturn extends VoidVisitorAdapter {
-
-    private int pointCount = 0;
-    private int callingCount = 0;
-    private int mutantsId = 0;
-    private boolean mutateMode = false;
+public class TrueReturn extends Mutarator {
 
     @Override
     public void visit(MethodDeclaration md, Object obj) {
@@ -37,26 +33,4 @@ public class TrueReturn extends VoidVisitorAdapter {
         }
     }
 
-    public int getMutantsNumber() {
-        return pointCount;
-    }
-
-    /**
-     * Switch mutator mode to mutation mode
-     */
-    public void switchToMutation() {
-        mutateMode = true;
-    }
-
-    public void switchToCount() {
-        mutateMode = false;
-    }
-
-    public void resetCallingCount() {
-        callingCount = 0;
-    }
-
-    public void setMutantId(int id) {
-        mutantsId = id;
-    }
 }

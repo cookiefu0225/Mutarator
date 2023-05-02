@@ -8,18 +8,15 @@ import com.github.javaparser.ast.expr.NameExpr;
 import com.github.javaparser.ast.expr.StringLiteralExpr;
 import com.github.javaparser.ast.stmt.ReturnStmt;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
+import edu.illinois.mutarator.Mutarator;
 
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
-public class EmptyReturn extends VoidVisitorAdapter {
-    private int pointCount = 0;
-    private int callingCount = 0;
-    private int mutantsId = 0;
-    private boolean mutateMode = false;
-    private Set<String> supported = new HashSet<>();
+public class EmptyReturn extends Mutarator {
+    private final Set<String> supported = new HashSet<>();
 
     public EmptyReturn() {
         for (EmptySupport e : EmptySupport.values()) {
@@ -99,28 +96,6 @@ public class EmptyReturn extends VoidVisitorAdapter {
         return temp != -1 ? target.substring(0, temp) : target;
     }
 
-    public int getMutantsNumber() {
-        return pointCount;
-    }
-
-    /**
-     * Switch mutator mode to mutation mode
-     */
-    public void switchToMutation() {
-        mutateMode = true;
-    }
-
-    public void switchToCount() {
-        mutateMode = false;
-    }
-
-    public void resetCallingCount() {
-        callingCount = 0;
-    }
-
-    public void setMutantId(int id) {
-        mutantsId = id;
-    }
 
     public enum EmptySupport {
         Integer,

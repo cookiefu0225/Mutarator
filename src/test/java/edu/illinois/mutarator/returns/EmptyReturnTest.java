@@ -25,6 +25,8 @@ public class EmptyReturnTest {
         er.setMutantId(1);
         er.visit(cu, null);
         er.resetCallingCount();
+        er.resetPointCount();
+        assertEquals(0, er.getMutantsNumber());
 
         CompilationUnit expected = srt.parse("sample.answer", "ValueReturnEmpty2.java");
         assertEquals(expected, cu);

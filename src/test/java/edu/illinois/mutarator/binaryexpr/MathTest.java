@@ -26,6 +26,9 @@ public class MathTest {
         math.setMutantId(0);
         math.visit(cu, null);
 
+        math.resetPointCount();
+        assertEquals(0, math.getMutantsNumber());
+
         CompilationUnit expected = srt.parse("sample", "ToyProgramMath-Modified.java");
         assertEquals(expected, cu);
     }

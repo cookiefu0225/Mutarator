@@ -3,16 +3,12 @@ package edu.illinois.mutarator.binaryexpr;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.expr.BinaryExpr;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
+import edu.illinois.mutarator.Mutarator;
 
 import java.util.HashSet;
 import java.util.Set;
 
-public class ConditionalBoundary extends VoidVisitorAdapter {
-
-    private int pointCount = 0;
-    private int callingCount = 0;
-    private int mutantsId = 0;
-    private boolean mutateMode = false;
+public class ConditionalBoundary extends Mutarator {
 
     /**
      * Override visit function w.r.t. what we're going to do
@@ -62,26 +58,4 @@ public class ConditionalBoundary extends VoidVisitorAdapter {
         }
     }
 
-    public int getMutantsNumber() {
-        return pointCount;
-    }
-
-    /**
-     * Switch mutator mode to mutation mode
-     */
-    public void switchToMutation() {
-        mutateMode = true;
-    }
-
-    public void switchToCount() {
-        mutateMode = false;
-    }
-
-    public void resetCallingCount() {
-        callingCount = 0;
-    }
-
-    public void setMutantId(int id) {
-        mutantsId = id;
-    }
 }

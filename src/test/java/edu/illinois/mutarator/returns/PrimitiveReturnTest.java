@@ -30,6 +30,9 @@ public class PrimitiveReturnTest {
         int calls = pr.getCallingCount();
         assertEquals(0, calls);
 
+        pr.resetPointCount();
+        assertEquals(0, pr.getMutantsNumber());
+
         CompilationUnit expected = srt.parse("sample.answer", "ValueReturnPrimitiveMutate2.java");
         assertEquals(expected, cu);
     }

@@ -5,16 +5,13 @@ import com.github.javaparser.ast.expr.IntegerLiteralExpr;
 import com.github.javaparser.ast.stmt.ReturnStmt;
 import com.github.javaparser.ast.type.PrimitiveType;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
+import edu.illinois.mutarator.Mutarator;
 
 import java.util.HashSet;
 import java.util.Set;
 
-public class PrimitiveReturn extends VoidVisitorAdapter {
+public class PrimitiveReturn extends Mutarator {
     Set<String> primitiveTypes = new HashSet<>();
-    private int pointCount = 0;
-    private int callingCount = 0;
-    private int mutantsId = 0;
-    private boolean mutateMode = false;
 
     public PrimitiveReturn() {
         for (PrimitiveType.Primitive c : PrimitiveType.Primitive.values()) {
@@ -44,29 +41,6 @@ public class PrimitiveReturn extends VoidVisitorAdapter {
                 });
             }
         }
-    }
-
-    public int getMutantsNumber() {
-        return pointCount;
-    }
-
-    /**
-     * Switch mutator mode to mutation mode
-     */
-    public void switchToMutation() {
-        mutateMode = true;
-    }
-
-    public void switchToCount() {
-        mutateMode = false;
-    }
-
-    public void resetCallingCount() {
-        callingCount = 0;
-    }
-
-    public void setMutantId(int id) {
-        mutantsId = id;
     }
 
     public int getCallingCount() {

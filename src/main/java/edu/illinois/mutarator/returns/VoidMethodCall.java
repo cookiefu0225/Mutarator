@@ -7,8 +7,9 @@ import com.github.javaparser.ast.expr.UnaryExpr;
 import com.github.javaparser.ast.visitor.ModifierVisitor;
 import com.github.javaparser.ast.visitor.Visitable;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
+import edu.illinois.mutarator.Mutarator;
 
-public class VoidMethodCall extends VoidVisitorAdapter {
+public class VoidMethodCall extends Mutarator {
     @Override
     public void visit(MethodDeclaration md, Object org) {
         super.visit(md, org);
