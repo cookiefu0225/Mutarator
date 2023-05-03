@@ -8,6 +8,7 @@ import edu.illinois.mutarator.binaryexpr.Math;
 import edu.illinois.mutarator.experimental.ArgumentPropagation;
 import edu.illinois.mutarator.experimental.MemberVariable;
 import edu.illinois.mutarator.experimental.NakedReceiver;
+import edu.illinois.mutarator.experimental.Switch;
 import edu.illinois.mutarator.returns.*;
 import edu.illinois.mutarator.testrunner.TestRunner;
 import edu.illinois.mutarator.unaryexpr.Increment;
@@ -161,7 +162,13 @@ public class Main {
                     System.out.println();
                     System.out.println("Constant Replacement");
                 }
+                case "Switch" -> {
+                    mutarator = new Switch();
+                    System.out.println();
+                    System.out.println("Switch Block Mutation");
+                }
             }
+            System.out.println();
 
             if (mutarator == null) {
                 continue;
