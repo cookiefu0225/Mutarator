@@ -48,6 +48,8 @@ public class Main {
         int currentMutantsNumber = 0;
         int currentKilled = 0;
 
+        System.out.println("Number of Files: " + numberOfFiles);
+
         // Mutation
         for (String mutator: args) {
             // Initialize mutator
@@ -189,8 +191,9 @@ public class Main {
                 }
 
                 // print out current mutating file
-                System.out.println("Mutating Class:");
-                container.forEach(System.out::println);
+                System.out.println("File: " + i);
+//                container.forEach(System.out::println);
+                System.out.println("Expected Mutants: " + currentMutantsNumber);
                 System.out.println();
 
                 mutarator.switchToMutation();
@@ -202,6 +205,7 @@ public class Main {
 
                     try {
                         boolean isKilled = runProcess("mvn test");
+                        System.out.println(isKilled);
 
                         if (isKilled) {
                             currentKilled ++;
