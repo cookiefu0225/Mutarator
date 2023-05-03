@@ -19,10 +19,10 @@ public class AODTest {
         ArithmeticOperatorDeletion ad = new ArithmeticOperatorDeletion();
         ad.debugMode = true;
         ad.visit(cu, null);
-        assertEquals(13, ad.getMutantsNumber());
+        assertEquals(7, ad.getMutantsNumber());
 
         ad.switchToMutation();
-        ad.setMutantId(6);
+        ad.setMutantId(2);
         ad.visit(cu, null);
         ad.resetCallingCount();
 

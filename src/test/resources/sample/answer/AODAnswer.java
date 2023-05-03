@@ -4,11 +4,11 @@ public class AOR {
         int c = 5;
         int a = b + c;
         int d = b - c;
-        int e = b * c;
+        int e = b;
         int f = b / c;
         e = f / c;
         int g = b % c;
-        int h = b;
+        int h = b & c;
         int i = b | c;
         int j = b ^ c;
         int k = b << c;

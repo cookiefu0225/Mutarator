@@ -12,8 +12,19 @@ public class ArithmeticOperatorDeletion extends Mutarator {
     @Override
     public void visit(BinaryExpr n, Object obj) {
         super.visit(n, obj);
+
+        BinaryExpr.Operator op = n.getOperator();
+
         Expression left = n.getLeft();
         Expression right = n.getRight();
+
+        boolean valid = op == BinaryExpr.Operator.MINUS || op == BinaryExpr.Operator.PLUS ||
+                op == BinaryExpr.Operator.MULTIPLY || op == BinaryExpr.Operator.DIVIDE ||
+                op == BinaryExpr.Operator.REMAINDER;
+
+        if (!valid) {
+            return;
+        }
 
         if (mutateMode) {
             if (mutantsId == callingCount) {
