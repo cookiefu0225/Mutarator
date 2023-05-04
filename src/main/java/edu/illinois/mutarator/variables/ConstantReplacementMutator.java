@@ -23,6 +23,7 @@ public class ConstantReplacementMutator extends Mutarator {
 
         if (mutateMode) {
             if (mutantsId == callingCount) {
+//                System.out.println(ae);
                 mutate(assignedValue);
             }
 
@@ -60,8 +61,15 @@ public class ConstantReplacementMutator extends Mutarator {
                 continue;
             }
 
+            valid = value.isBooleanLiteralExpr() || value.isIntegerLiteralExpr() ||
+                    value.isLongLiteralExpr() || value.isDoubleLiteralExpr();
+            if (!valid) {
+                continue;
+            }
+
             if (mutateMode) {
                 if (mutantsId == callingCount) {
+//                    System.out.println(n);
                     mutate(value);
                 }
                 callingCount ++;
@@ -99,10 +107,10 @@ public class ConstantReplacementMutator extends Mutarator {
     private long generateMutation(long originalValue) {
         if (!debugFlag) {
             Random rand = new Random();
-            int selection = rand.nextInt(6);
             long oldVal = originalValue;
 
             while (oldVal == originalValue) {
+                int selection = rand.nextInt(6);
                 switch (selection) {
                     case 0 -> originalValue = 1;
                     case 1 -> originalValue = 0;
@@ -127,10 +135,10 @@ public class ConstantReplacementMutator extends Mutarator {
     private double generateMutation(double originalValue) {
         if (!debugFlag) {
             Random rand = new Random();
-            int selection = rand.nextInt(6);
             double oldVal = originalValue;
 
             while (oldVal == originalValue) {
+                int selection = rand.nextInt(6);
                 switch (selection) {
                     case 0 -> originalValue = 1.0;
                     case 1 -> originalValue = 0.0;

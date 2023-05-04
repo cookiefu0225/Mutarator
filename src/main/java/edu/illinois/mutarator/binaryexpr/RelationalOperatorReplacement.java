@@ -35,7 +35,7 @@ public class RelationalOperatorReplacement extends Mutarator {
                         int number = rand.nextInt(upperbound);
 
                         while (supportedMutator.get(number) == op) {
-                            number = rand.nextInt();
+                            number = rand.nextInt(upperbound);
                         }
                         expr.setOperator(supportedMutator.get(number));
                     }
